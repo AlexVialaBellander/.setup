@@ -1,0 +1,12 @@
+[core]
+	attributesfile = ~/.setup/development/gitattributes
+	excludesfile = ~/.setup/development/gitignore
+	editor = code --wait
+[user]
+	name = Alexander Viala Bellander
+	email = grubsevb@gmail.com
+
+[color "status"]
+	added = green
+	changed = cyan
+	untracked = yellow

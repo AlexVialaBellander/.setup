@@ -1,0 +1,36 @@
+echo "Running setup"
+read email
+
+echo "Installing homebrew"
+eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo "Installing wget"
+eval brew install wget
+
+echo "Installing git"
+eval brew install git 
+
+echo "Installing oh my zsh"
+eval sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "Installing zsh-autosuggestions"
+eval git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+echo "Cloning setup repo"
+eval git clone https://github.com/AlexVialaBellander/.setup ~/.setup && make -C ~/.setup
+
+echo "generating ssh key for github"
+eval ssh-keygen -t ed25519 -C $email -f ~/.ssh/github
+eval pbcopy < ~/.ssh/github.pub
+echo "public key saved to clipboard"
+echo "paste and create here: https://github.com/settings/ssh/new"
+
+echo "press any key to continue"
+read _
+
+echo "Installing Python"
+eval brew install python
+export PATH=$PATH:/opt/homebrew/opt/python@3.10/libexec/bin
+
+echo "Installing Anaconda"
+eval brew install --cask anaconda
