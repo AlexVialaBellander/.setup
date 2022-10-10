@@ -34,3 +34,33 @@ export PATH=$PATH:/opt/homebrew/opt/python@3.10/libexec/bin
 
 echo "Installing Anaconda"
 eval brew install --cask anaconda
+
+
+
+name: torch
+channels:
+  - pytorch-nightly
+  - conda-forge
+dependencies:
+    - python=3.9
+    - pip>=19.0
+    - pytorch 
+    - torchvision 
+    - jupyter
+    - scikit-learn
+    - scipy
+    - pandas
+    - pandas-datareader
+    - matplotlib
+    - pillow
+    - tqdm
+    - requests
+    - h5py
+    - pyyaml
+    - flask
+    - boto3
+    - ipykernel
+    - pip:
+        - bayesian-optimization
+        - gym
+        - kaggle
