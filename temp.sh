@@ -12,6 +12,10 @@ eval sudo apt install git
 echo "Installing homebrew"
 eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/alexandervialabellander/.profile
+echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/alexandervialabellander/.profile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 echo "Installing wget"
 eval brew install wget
 
