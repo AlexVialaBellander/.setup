@@ -37,7 +37,7 @@ eval git clone https://github.com/AlexVialaBellander/.setup ~/.setup && make -C 
 
 echo "generating ssh key for github"
 eval ssh-keygen -t ed25519 -C $email -f ~/.ssh/github
-eval pbcopy < ~/.ssh/github.pub
+eval cat ~/.ssh/github.pub
 echo "public key saved to clipboard"
 echo "paste and create here: https://github.com/settings/ssh/new"
 
