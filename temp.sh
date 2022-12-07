@@ -43,3 +43,8 @@ echo "paste and create here: https://github.com/settings/ssh/new"
 
 echo "press any key to continue"
 read _
+
+echo "Enabling ssh key for github"
+eval "$(ssh-agent -s)"
+eval ssh-add ~/.ssh/github
+eval ssh -T git@github.com
