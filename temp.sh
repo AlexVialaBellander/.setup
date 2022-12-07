@@ -17,7 +17,7 @@ echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/alexander
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "Installing wget"
-eval brew install wget
+eval sudo apt install wget
 
 echo "Installing oh my zsh"
 eval sudo apt-get install zsh
