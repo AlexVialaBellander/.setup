@@ -29,9 +29,6 @@ echo "Installing Python"
 eval brew install python
 export PATH=$PATH:/opt/homebrew/opt/python@3.10/libexec/bin
 
-echo "Installing Anaconda"
-eval brew install --cask anaconda
-
 echo "Enter your email:"
 read email
 
