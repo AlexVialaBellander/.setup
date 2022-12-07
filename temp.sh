@@ -20,7 +20,7 @@ echo "Installing wget"
 eval brew install wget
 
 echo "Installing oh my zsh"
-eval /bin/bash -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+eval sudo apt-get install zsh
 
 echo "Installing zsh-autosuggestions"
 eval git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
