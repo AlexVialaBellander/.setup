@@ -48,3 +48,27 @@ echo "Enabling ssh key for github"
 eval "$(ssh-agent -s)"
 eval ssh-add ~/.ssh/github
 eval ssh -T git@github.com
+
+echo "Importing gitconfig"
+eval ln -Fis "${PWD}/gitconfig" "${HOME}/.gitconfig"
+eval grep -q '/zshrc' "${HOME}/.zshrc" 2> /dev/null || \
+		echo "source '${PWD}/development/zshrc'" >> "${HOME}/.zshrc"
+
+echo "Installing miniconda"
+SYSTEM = $(uname -s)
+CONDA_INSTALL_PATH = ""
+
+if [SYSTEM == "Darwin"]
+then CONDA_INSTALL_PATH="Miniconda3-latest-MacOSX-arm64.sh"
+elif [SYSTEM == "Linux"]
+then CONDA_INSTALL_PATH="Miniconda3-latest-Linux-x86_64.sh"
+fi
+
+eval mkdir temp_installation
+eval cd temp_installation
+eval wget https://repo.anaconda.com/miniconda/$CONDA_INSTALL_PATH
+eval bash $CONDA_INSTALL_PATH
+eval cd ..
+eval rm -rf temp_installation
+eval ~/miniconda3/bin/conda init bash
+eval ~/miniconda3/bin/conda init zsh
