@@ -1,26 +1,51 @@
+SYSTEM=$(uname -s)
+
 echo "Running setup"
 
-echo "Updating system"
-eval sudo apt-get update
+if [ "$SYSTEM" == "Linux" ]
+then 
+	echo "Updating system"
+	eval sudo apt-get update
+	
+	echo "Installing curl"
+	eval sudo apt install curl
 
-echo "Installing curl"
-eval sudo apt install curl
+	echo "Installing git"
+	eval sudo apt install git
 
-echo "Installing git"
-eval sudo apt install git
+	echo "Installing homebrew"
+	echo | eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null
 
-echo "Installing homebrew"
-echo | eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null
+	echo "Installing wget"
+	eval sudo apt install wget
 
-echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/alexandervialabellander/.profile
-echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/alexandervialabellander/.profile
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+	echo "Installing oh my zsh"
+	eval sudo apt-get install zsh
+elif [ "$SYSTEM" == "Darwin" ]
+then 
+	echo "Installing homebrew"
+	echo | eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null
 
-echo "Installing wget"
-eval sudo apt install wget
+	echo "Installing curl"
+	eval brew install curl
 
-echo "Installing oh my zsh"
-eval sudo apt-get install zsh
+	echo "Installing git"
+	eval brew install git
+
+	echo "Installing wget"
+	eval brew install wget
+
+	echo "Installing oh my zsh"
+	eval brew install zsh
+else 
+	echo "System not supported"
+	exit 1
+fi
+
+# comment out since unsure if works on both Linux and Mac
+#echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/alexandervialabellander/.profile
+#echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/alexandervialabellander/.profile
+#eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 echo "Installing zsh-autosuggestions"
 eval git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -50,23 +75,22 @@ eval ssh-add ~/.ssh/github
 eval ssh -T git@github.com
 
 echo "Importing gitconfig"
-eval ln -Fis "${PWD}/gitconfig" "${HOME}/.gitconfig"
+eval ln -Fis "${PWD}/development/gitconfig" "${HOME}/.gitconfig"
 eval grep -q '/zshrc' "${HOME}/.zshrc" 2> /dev/null || \
 		echo "source '${PWD}/development/zshrc'" >> "${HOME}/.zshrc"
 
 echo "Installing miniconda"
-SYSTEM = $(uname -s)
-CONDA_INSTALL_PATH = ""
+CONDA_INSTALL_PATH=""
 
-if [SYSTEM == "Darwin"]
-then CONDA_INSTALL_PATH="Miniconda3-latest-MacOSX-arm64.sh"
-elif [SYSTEM == "Linux"]
-then CONDA_INSTALL_PATH="Miniconda3-latest-Linux-x86_64.sh"
+if [ "$SYSTEM" == "Darwin" ]
+then $CONDA_INSTALL_PATH="Miniconda3-latest-MacOSX-arm64.sh"
+elif ["$SYSTEM" == "Linux"]
+then $CONDA_INSTALL_PATH="Miniconda3-latest-Linux-x86_64.sh"
 fi
 
 eval mkdir temp_installation
 eval cd temp_installation
-eval wget https://repo.anaconda.com/miniconda/$CONDA_INSTALL_PATH
+eval wget "https://repo.anaconda.com/miniconda/$CONDA_INSTALL_PATH"
 eval bash $CONDA_INSTALL_PATH
 eval cd ..
 eval rm -rf temp_installation
