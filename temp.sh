@@ -83,9 +83,9 @@ echo "Installing miniconda"
 CONDA_INSTALL_PATH=""
 
 if [ "$SYSTEM" == "Darwin" ]
-then $CONDA_INSTALL_PATH="Miniconda3-latest-MacOSX-arm64.sh"
+then CONDA_INSTALL_PATH="Miniconda3-latest-MacOSX-arm64.sh"
 elif ["$SYSTEM" == "Linux"]
-then $CONDA_INSTALL_PATH="Miniconda3-latest-Linux-x86_64.sh"
+then CONDA_INSTALL_PATH="Miniconda3-latest-Linux-x86_64.sh"
 fi
 
 eval mkdir temp_installation
