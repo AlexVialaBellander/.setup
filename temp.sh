@@ -13,8 +13,13 @@ then
 	echo "Installing git"
 	eval sudo apt install git
 
+	echo "Installing brew requirements"
+	eval sudo apt-get install build-essential procps curl file git
+
 	echo "Installing homebrew"
-	echo | eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null
+	eval NONINTERACTIVE=1 
+	eval curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh >> homebrew_install.sh
+	eval bash homebrew_install.sh
 
 	echo "Installing wget"
 	eval sudo apt install wget
@@ -23,8 +28,12 @@ then
 	eval sudo apt-get install zsh
 elif [ "$SYSTEM" == "Darwin" ]
 then 
+	echo "Installing xcode"
+	eval xcode-select --install
+
 	echo "Installing homebrew"
-	echo | eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" > /dev/null
+	eval NONINTERACTIVE=1 
+	eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 	echo "Installing curl"
 	eval brew install curl
@@ -62,8 +71,8 @@ eval git clone https://github.com/AlexVialaBellander/.setup ~/.setup && make -C 
 
 echo "generating ssh key for github"
 eval ssh-keygen -t ed25519 -C $email -f ~/.ssh/github
+echo "public key:"
 eval cat ~/.ssh/github.pub
-echo "public key saved to clipboard"
 echo "paste and create here: https://github.com/settings/ssh/new"
 
 echo "press any key to continue"
@@ -77,7 +86,7 @@ eval ssh -T git@github.com
 echo "Importing gitconfig"
 eval ln -Fis "${PWD}/development/gitconfig" "${HOME}/.gitconfig"
 eval grep -q '/zshrc' "${HOME}/.zshrc" 2> /dev/null || \
-		echo "source '${PWD}/development/zshrc'" >> "${HOME}/.zshrc"
+echo "source '${PWD}/development/zshrc'" >> "${HOME}/.zshrc"
 
 echo "Installing miniconda"
 CONDA_INSTALL_PATH=""
