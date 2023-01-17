@@ -1,6 +1,8 @@
 SYSTEM=$(uname -s)
-
+TEMPDIR="temp"
 echo "Running setup"
+
+eval mkdir $TEMPDIR
 
 if [ "$SYSTEM" == "Linux" ]
 then 
@@ -18,8 +20,8 @@ then
 
 	echo "Installing homebrew"
 	eval NONINTERACTIVE=1 
-	eval curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh >> homebrew_install.sh
-	eval bash homebrew_install.sh
+	eval curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh >> $TEMPDIR/homebrew_install.sh
+	eval bash $TEMPDIR/homebrew_install.sh
 
 	echo "Installing wget"
 	eval sudo apt install wget
@@ -97,11 +99,10 @@ elif ["$SYSTEM" == "Linux"]
 then CONDA_INSTALL_PATH="Miniconda3-latest-Linux-x86_64.sh"
 fi
 
-eval mkdir temp_installation
-eval cd temp_installation
-eval wget "https://repo.anaconda.com/miniconda/$CONDA_INSTALL_PATH"
-eval bash $CONDA_INSTALL_PATH
-eval cd ..
-eval rm -rf temp_installation
+eval wget -P $TEMPDIR/ "https://repo.anaconda.com/miniconda/$CONDA_INSTALL_PATH"
+eval bash $TEMPDIR/$CONDA_INSTALL_PATH
+
+eval rm -rf $TEMPDIR
+
 eval ~/miniconda3/bin/conda init bash
 eval ~/miniconda3/bin/conda init zsh
