@@ -35,7 +35,9 @@ then
 
 	echo "Installing homebrew"
 	eval NONINTERACTIVE=1 
-	eval /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	eval curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh >> $TEMPDIR/homebrew_install.sh
+	eval sh $TEMPDIR/homebrew_install.sh
+
 
 	echo "Installing curl"
 	eval brew install curl
